@@ -1,0 +1,106 @@
+﻿--Phân quyền,tạo người dùng
+CREATE LOGIN thethang1
+WITH PASSWORD = '123456', DEFAULT_DATABASE = QuanLyCuaHangSach
+
+CREATE USER thethang1
+FROM LOGIN thethang1
+
+CREATE LOGIN thethang2
+WITH PASSWORD = '123456', DEFAULT_DATABASE = QuanLyCuaHangSach
+
+CREATE USER thethang2
+FROM LOGIN thethang2
+
+CREATE LOGIN hoang1
+WITH PASSWORD = '123456', DEFAULT_DATABASE = QuanLyCuaHangSach
+
+CREATE USER hoang1
+FOR LOGIN hoang1
+
+CREATE LOGIN hoang2
+WITH PASSWORD = '123456', DEFAULT_DATABASE = QuanLyCuaHangSach
+
+CREATE USER hoang2
+FOR LOGIN hoang2
+
+GRANT SELECT,INSERT,UPDATE
+ON NhanVien
+TO thethang1
+
+GRANT SELECT,INSERT
+ON Sach
+TO thethang1
+
+GRANT SELECT,UPDATE
+ON HoaDonMua
+TO thethang1
+
+GRANT DELETE
+ON Sach
+TO thethang2
+
+GRANT EXEC
+ON sp_GiamGiaSachNXB
+TO thethang2
+
+GRANT UPDATE
+ON KhachHang
+TO thethang2
+
+GRANT SELECT,INSERT,UPDATE,DELETE
+ON HoaDonMua
+TO hoang1
+
+GRANT SELECT,INSERT,UPDATE,DELETE 
+ON ChiTietDonNhap
+TO hoang1
+
+GRANT INSERT
+ON HoaDonNhap
+TO hoang1
+
+GRANT INSERT
+ON Sach
+TO hoang2
+
+GRANT SELECT,INSERT,UPDATE
+ON KhachHang
+TO hoang2
+
+GRANT SELECT,UPDATE
+ON SachChuaDuocMua
+TO hoang2
+
+REVOKE UPDATE 
+ON NhanVien(MaNV)
+FROM thethang1
+
+REVOKE DELETE
+ON Sach(MaSach,MaNXB)
+FROM thethang2
+
+REVOKE DELETE,UPDATE
+ON HoaDonMua(MaNV,MaKH)
+FROM hoang1
+
+REVOKE UPDATE
+ON KhachHang(MaKH)
+FROM hoang2
+
+REVOKE EXEC
+ON sp_GiamGiaSachNXB
+FROM thethang2
+
+REVOKE SELECT
+ON KhachHang(SDT)
+FROM hoang2
+
+REVOKE INSERT
+ON Sach
+FROM thethang2
+
+REVOKE INSERT
+ON ChiTietDonNhap
+FROM hoang1
+
+
